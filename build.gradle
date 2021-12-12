@@ -1,0 +1,45 @@
+buildscript {
+    repositories {
+        maven {
+            url "http://maven.aliyun.com/nexus/content/groups/public/"
+        }
+        mavenCentral()
+    }
+}
+
+plugins {
+	id 'org.springframework.boot' version '2.4.1'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.yiitz'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+    maven {
+        url "http://maven.aliyun.com/nexus/content/groups/public/"
+    }
+    mavenCentral()
+}
+
+// 移除spring boot自带的日志管理工具，否则会有冲突
+configurations {
+    compile.exclude module: 'spring-boot-starter-logging'
+}
+
+def lombok = 'org.projectlombok:lombok:1.18.12'
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    compileOnly lombok
+    annotationProcessor lombok
+    
+    testImplementation 'org.springframework.boot:spring-boot-starter-test' 
+}
+
+test {
+	useJUnitPlatform()
+}
